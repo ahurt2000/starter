@@ -1,0 +1,9 @@
+
+services:
+  redis:
+    image: redis:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - isolated-nw

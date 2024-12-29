@@ -1,0 +1,12 @@
+services:
+
+  sqlite3:
+    image: nouchka/sqlite3:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-sqlite3
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./docker/db/:/root/db/
+    ports:
+      - "9000:9000"
+    restart: unless-stopped

@@ -1,0 +1,12 @@
+docker/mysql/db/*
+docker/apache/log/*
+docker/db/*
+!docker/db/.gitkeep
+!docker/mysql/.gitkeep
+!docker/apache/log/.gitkeep
+.DS_Store
+.composer/*
+!composer/.gitkeep
+.symfony5/*
+!.symfony5/.gitkeep
+html/*

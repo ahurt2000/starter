@@ -1,0 +1,19 @@
+services:
+  apache:
+    container_name: ${COMPOSE_PROJECT_NAME}-apache
+    build:
+      context: ./docker/apache
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:443:443"
+    volumes:
+      - ./html:/var/www/html/:rw
+      - ./docker/apache/log:/var/log/apache2:rw
+      - ./docker/apache/vhost:/etc/apache2/sites-available:rw
+    environment:
+        - PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+    networks:
+      isolated-nw:
+        aliases:
+        - ${COMPOSE_PROJECT_NAME}.local          

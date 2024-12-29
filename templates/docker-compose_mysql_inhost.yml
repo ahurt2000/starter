@@ -1,0 +1,22 @@
+# To be used hosting db files in the host pc
+
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:8.0
+    container_name: ${COMPOSE_PROJECT_NAME}-mysql
+    user: mysql
+    command: --innodb_use_native_aio=0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}db
+      - MYSQL_USER=${COMPOSE_PROJECT_NAME}
+      - MYSQL_PASSWORD=${COMPOSE_PROJECT_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/db/mysql:/var/lib/mysql:rw
+    networks:
+      isolated-nw:
+        aliases:
+        - mysql

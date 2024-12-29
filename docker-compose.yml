@@ -1,0 +1,28 @@
+services:
+
+  php:
+    container_name: ${COMPOSE_PROJECT_NAME}-php
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    hostname: ${COMPOSE_PROJECT_NAME}-php  
+    volumes:
+      - ./html:/var/www/html:rw
+      - ./.composer:/var/www/.composer:rw
+      - ./.symfony5:/var/www/.symfony5:rw
+      - ./docker/db/:/var/www/data/db:rw
+      - ./docker/php/conf/30-custom.ini:/usr/local/etc/php/conf.d/30-custom.ini
+    networks:
+       isolated-nw:
+          aliases:
+            - php
+            
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+networks:
+  isolated-nw:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.242.0.0/24
