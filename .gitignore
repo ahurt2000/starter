@@ -6,7 +6,7 @@ docker/db/*
 !docker/apache/log/.gitkeep
 .DS_Store
 .composer/*
-!composer/.gitkeep
+!.composer/.gitkeep
 .symfony5/*
 !.symfony5/.gitkeep
 html/*
