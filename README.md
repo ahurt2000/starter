@@ -67,22 +67,25 @@ alias | grep COMPOSE_PROJECT_NAME
 COMPOSE_PROJECT_NAME-up
 ```
 
-Example: if your project is named "demo" run: demo-up
+Example: if your project is named "demo" run: *demo-up*
+
+The first time it will take some time to build the docker images. 
 
 ### Installing Symfony with composer
 
 ```
-COMPOSE_PROJECT_NAME-composer create-project symfony/skeleton:"7.2.x-dev" html
+COMPOSE_PROJECT_NAME-composer create-project symfony/skeleton:"7.2.x-dev" COMPOSE_PROJECT_NAME
 ```
 
 Go to: https://COMPOSE_PROJECT_NAME.local
 
 ### Recommended actions
 
-Initialize git in your project folder html/COMPOSE_PROJECT_NAME
+Initialize git in your project folder COMPOSE_PROJECT_NAME
 
 ```
-cd html/COMPOSE_PROJECT_NAME
+rm -rf .git
+cd COMPOSE_PROJECT_NAME
 git init
 ```
 

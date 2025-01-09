@@ -37,6 +37,9 @@ BASHRC_FILE=~/.bashrc
 PROJECT_DIR=$(pwd)
 ALIAS_FILE="$PROJECT_DIR/$PROJECT_NAME'_alias.sh'"
 
+# create project folder
+mkdir -p "$PROJECT_DIR/$PROJECT_NAME"
+
 # Check if the alias file is already sourced in .bashrc
 if ! grep -q "$ALIAS_FILE" "$BASHRC_FILE"; then
     echo "source $ALIAS_FILE" >> "$BASHRC_FILE"
@@ -45,10 +48,8 @@ fi
 touch "$ALIAS_FILE"
 echo "alias "$PROJECT_NAME"-up='docker-compose -f docker-compose.yml -f templates/docker-compose_apache.yml -f templates/docker-compose_mysql"$INHOST".yml up -d'" >>"$ALIAS_FILE"
 echo "alias "$PROJECT_NAME"-down='docker-compose -f docker-compose.yml -f templates/docker-compose_apache.yml -f templates/docker-compose_mysql"$INHOST".yml down'" >>"$ALIAS_FILE"
-# echo "alias "$PROJECT_NAME"-php='docker-compose -f docker-compose.yml -f templates/docker-compose_apache.yml -f templates/docker-compose_mysql"$INHOST".yml run "$PROJECT_NAME"-php '" >>"$ALIAS_FILE"
-# echo "alias "$PROJECT_NAME"-composer='docker-compose -f docker-compose.yml -f templates/docker-compose_apache.yml -f templates/docker-compose_mysql"$INHOST".yml run "$PROJECT_NAME"-php composer'" >>"$ALIAS_FILE"
 echo "alias "$PROJECT_NAME"-php='docker exec -it "$PROJECT_NAME"-php php'" >>$ALIAS_FILE
 echo "alias "$PROJECT_NAME"-composer='docker exec -it "$PROJECT_NAME"-php composer'" >>$ALIAS_FILE
-
+echo "alias "$PROJECT_NAME"-bash='docker exec -it "$PROJECT_NAME"-php bash'" >>$ALIAS_FILE
 
 echo -e "${GREEN}Now execute: source ~/.bashrc${NC}"

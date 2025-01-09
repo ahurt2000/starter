@@ -30,10 +30,22 @@ fi
 sed -i '' "s/PROJECTNAME/"$PROJECT_NAME"/g" .env
 
 INHOST=${2-""}
-# check if the INHOST is not empty or not is equal to 'inhost'
+
 if [ "$INHOST" != "_inhost" ]; then
-    echo "${CYAN}MySQL is assumed not inhost. Please provide the second argument as '_inhost' if you want in the inhost${NC}"
+    echo "${CYAN}MySQL is not supposed to be '_inhost', so the MySQL database files are in the container. Please provide the second argument as '_inhost' if you want in the inhost.${NC}"
+else
+    if [ -d "docker/db/mysql" ]; then
+        echo "${RED}The folder docker/db/mysql does not exist. Please remove it.${NC}"
+        exit 1
+    fi
+    mkdir docker/db/mysql
+    echo "${CYAN}MySQL is now '_inhost', so its files are stored in your PC's database files in the docker/db/mysql folder.${NC}"
 fi
+
+PROJECT_DIR=$(pwd)
+
+# create project folder
+mkdir -p "$PROJECT_DIR/$PROJECT_NAME"
 
 cd ~/.oh-my-zsh/custom
 touch $PROJECT_NAME'_alias.zsh'd
@@ -41,6 +53,7 @@ echo "alias "$PROJECT_NAME"-up='docker-compose -f docker-compose.yml -f template
 echo "alias "$PROJECT_NAME"-down='docker-compose -f docker-compose.yml -f templates/docker-compose_apache.yml -f templates/docker-compose_mysql"$INHOST".yml down'" >>$PROJECT_NAME'_alias.zsh'
 echo "alias "$PROJECT_NAME"-php='docker exec -it "$PROJECT_NAME"-php php'" >>$PROJECT_NAME'_alias.zsh'
 echo "alias "$PROJECT_NAME"-composer='docker exec -it "$PROJECT_NAME"-php composer'" >>$PROJECT_NAME'_alias.zsh'
+echo "alias "$PROJECT_NAME"-bash='docker exec -it "$PROJECT_NAME"-php bash'" >>$PROJECT_NAME'_alias.zsh'
 
 echo 
 echo -e "${GREEN}Now execute: source ~/.zshrc${NC}"

@@ -9,4 +9,4 @@ docker/db/*
 !.composer/.gitkeep
 .symfony5/*
 !.symfony5/.gitkeep
-html/*
+.idea/*
